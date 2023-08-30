@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast';
 import api from './../util/api'
@@ -10,7 +10,7 @@ const initialState = {
 }
 
 const Login = () => {
-	const [users,setUsers]=useState([])
+	const [users, setUsers] = useState([])
 	const [user, setUser] = useState(initialState)
 	const navigate = useNavigate()
 
@@ -40,43 +40,43 @@ const Login = () => {
 	}
 
 
-		const fetchUsers=()=>{
-			api.get(`/api/getRoleValueAndReportingTo/${user.email}`)
-			.then(res=>{
+	const fetchUsers = () => {
+		api.get(`/api/getRoleValueAndReportingTo/${user.email}`)
+			.then(res => {
 				setUsers(res.data)
 				console.log(res.data)
 			}).catch(err => console.log(err.message))
-		}
+	}
 
 	console.log(user)
 	// function to call login api
 	const submitHandler = async (e) => {
 		e.preventDefault()
-		await axios.post('/auth/login', user)
+		await api.post('/auth/login', user)
 			.then(response => {
 				// console.log(response.data);
 				localStorage.setItem('token', response.data.jwtToken)
-				localStorage.setItem('userEmail',user.email)
-				localStorage.setItem('userId',response.data.userId)
+				localStorage.setItem('userEmail', user.email)
+				localStorage.setItem('userId', response.data.userId)
 				console.log(response)
 				toast.success('Login successful')
-				if (response.status===200){
-					navigate('/home',{state:user.email})
+				if (response.status === 200) {
+					navigate('/home', { state: user.email })
 				}
 				setUser(initialState)
 			}).catch(error => {
 				console.log(error.message);
 				// toast.error(error.response.data)
 			})
-			// const useremail=user.email
-			// console.log(users)
-			// // const dat=data1.filter(item=>item[0]===useremail)
-			// // console.log(dat)
-			// // if (dat[1]==='SalesPerson'){
-			// // 	navigate('/salesPersonDashboard')
-			// // }else{
-			// // 	navigate('/dashboard')
-			// // }
+		// const useremail=user.email
+		// console.log(users)
+		// // const dat=data1.filter(item=>item[0]===useremail)
+		// // console.log(dat)
+		// // if (dat[1]==='SalesPerson'){
+		// // 	navigate('/salesPersonDashboard')
+		// // }else{
+		// // 	navigate('/dashboard')
+		// // }
 	}
 	return (
 		<div className='container'>
@@ -103,7 +103,7 @@ const Login = () => {
 								<div className="col-12 mt-5 text-center">
 									<div className="input-group d-flex justify-content-center">
 										<input type="submit" className='btn  btn-success' value={'Submit'} />
-										<button className='btn btn-secondary' style={{marginLeft:'10px'}} onClick={clearHandler}>Clear</button>
+										<button className='btn btn-secondary' style={{ marginLeft: '10px' }} onClick={clearHandler}>Clear</button>
 									</div>
 								</div>
 							</form>
