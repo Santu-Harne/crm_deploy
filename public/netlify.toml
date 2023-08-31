@@ -3,3 +3,8 @@
   from = "*"
   to = "http://crm-made-simple-f8a83a9caed2.herokuapp.com/:splat"
   status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
